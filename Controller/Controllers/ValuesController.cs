@@ -27,31 +27,9 @@ namespace Controller.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] int Operation, string Name, int Channel = 1, string Url = null)
+        public void Post([FromBody] string Name)
         {
-            if (Operation == 1)
-            {
-                //Change Channel:
-                OperationsTV.ChangeChannel(Name, Channel);
-            }
-            else if(Operation == 2)
-            {
-                //Add Device
-                OperationsTV.AddDevice(Name);
-            }
-            else if(Operation == 3)
-            {
-                //Add Channel
-                if (Url == null)
-                {
-                    return;
-                }
-                OperationsTV.CreateChannel(Url);
-            }
-            else
-            {
-                return;
-            }
+            
         }
 
         // PUT api/values/5
