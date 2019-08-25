@@ -10,5 +10,14 @@
 
     <Grid>
 
+        <MediaElement x:Name="Player"
+                        AreTransportControlsEnabled="True"
+                        AudioCategory="ForegroundOnlyMedia"
+                        AutoPlay="True"
+                        MediaFailed="MediaFailed"
+                      
+                      
+            />
+
     </Grid>
 </Page>
