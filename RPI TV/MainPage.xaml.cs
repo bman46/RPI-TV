@@ -48,20 +48,18 @@ namespace RPI_TV
                 Settings.ServerIP = composite["ServerIP"] as string;
             }
 
-            //stream:
-            Settings.Source = "rtmp://192.168.1.51:1935/live/5c33d398e4b02b6251941977_0";
-            Stream();
-            
+            //stream event subscriber:
+            Settings.SourceChanged += Stream;
+
+            Settings.Source = "rtmp://192.168.1.51:1935/live/5c33d398e4b02b625194197b_0";
         }
-        private void Stream()
+        public void Stream(Object source, EventArgs e)
         {
             try
             {
+                Player.Stop();
                 PropertySet options = new PropertySet();
                 options.Add("rtsp_flags", "prefer_udp");
-
-                Player.Stop();
-                Settings.RefreshSettings();
                 FFmpegMSS = FFmpegInteropMSS.CreateFFmpegInteropMSSFromUri(Settings.Source, Settings.AudioDecode, true, options);
                 if (FFmpegMSS != null)
                 {
@@ -149,18 +147,6 @@ namespace RPI_TV
         private void SettingsBTN_Click(object sender, RoutedEventArgs e)
         {
             InputTextDialogAsync();
-        }
-    }
-    public class Settings
-    {
-        public static string Source { get; set; }
-        public static string ServerIP { get; set; }
-        public static string Name { get; set; }
-        public static bool AudioDecode { get; set; }
-        public static int ErrorCount { get; set; }
-        public static void RefreshSettings()
-        {
-
         }
     }
 }
