@@ -16,6 +16,11 @@ using FFmpegInterop;
 using Windows.Media.Core;
 using Windows.UI.Popups;
 using Windows.Storage;
+using System.Threading.Tasks;
+using System.Net;
+using Windows.ApplicationModel.Core;
+using Windows.UI.ViewManagement;
+
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -27,6 +32,10 @@ namespace RPI_TV
         public MainPage()
         {
             this.InitializeComponent();
+            //add settings to title bar:
+            Window.Current.SizeChanged += Current_SizeChanged_UpdateTitleBar;
+            CustomizeTitleBar();
+            customTitleBar.Visibility = Visibility.Collapsed;
 
             //get name of device:
             var deviceInfo = new Windows.Security.ExchangeActiveSyncProvisioning.EasClientDeviceInformation();
@@ -37,11 +46,6 @@ namespace RPI_TV
             if (composite != null)
             {
                 Settings.ServerIP = composite["ServerIP"] as string;
-            } else
-            {
-                var messageDialog = new MessageDialog("No Server IP Found.");
-                composite["ServerIP"] = "Calibri";
-                roamingSettings.Values["IPConfigs"] = composite;
             }
 
             //stream:
@@ -93,6 +97,58 @@ namespace RPI_TV
         private void Errors()
         {
             Settings.ErrorCount++;
+        }
+        private void CustomizeTitleBar()
+        {
+            // customize title area
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            Window.Current.SetTitleBar(MidLayer);
+        }
+
+        private async Task<String> InputTextDialogAsync(string title = "Set Controller IP: ")
+        {
+            TextBox inputTextBox = new TextBox();
+            inputTextBox.AcceptsReturn = false;
+            inputTextBox.Height = 32;
+            ContentDialog dialog = new ContentDialog();
+            dialog.Content = inputTextBox;
+            dialog.Title = title + Settings.ServerIP;
+            dialog.IsSecondaryButtonEnabled = true;
+            dialog.PrimaryButtonText = "Ok";
+            dialog.SecondaryButtonText = "Cancel";
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                if(inputTextBox.Text == "")
+                {
+                    return "";
+                }
+                Settings.ServerIP = inputTextBox.Text;
+                ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+                Windows.Storage.ApplicationDataCompositeValue composite = new Windows.Storage.ApplicationDataCompositeValue();
+                composite["ServerIP"] = inputTextBox.Text;
+                roamingSettings.Values["IPConfigs"] = composite;
+                return inputTextBox.Text;
+            }
+            else
+            {
+                return "";
+            }
+        }
+        private void Current_SizeChanged_UpdateTitleBar(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
+        {
+            ApplicationView view = ApplicationView.GetForCurrentView();
+            if (!view.IsFullScreenMode)
+            {
+                customTitleBar.Visibility = Visibility.Visible;
+            } else
+            {
+                customTitleBar.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void SettingsBTN_Click(object sender, RoutedEventArgs e)
+        {
+            InputTextDialogAsync();
         }
     }
     public class Settings

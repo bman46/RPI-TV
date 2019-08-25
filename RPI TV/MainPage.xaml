@@ -8,16 +8,32 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <!--title bar row-->
+            <RowDefinition Height="Auto" />
+            <!--page content row-->
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" x:Name="customTitleBar" Height="32">
+            <!--title bar grid-->
+            <TextBlock Text="RPI TV" Foreground="Black" VerticalAlignment="Center" Margin="40,0,0,0" Height="19"/>
+            <Grid x:Name="MidLayer" Background="Transparent"/>
+            <Grid HorizontalAlignment="Left">
+                <Button Grid.Column="1" x:Name="SettingsBTN" Background="Transparent" Foreground="Black" Padding="0" BorderThickness="0" Margin="0,0,200,0" Click="SettingsBTN_Click">
+                    <SymbolIcon Symbol="Setting" Foreground="Black" Width="35"/>
+                </Button>
+            </Grid>
+    </Grid>
 
-        <MediaElement x:Name="Player"
-                        AreTransportControlsEnabled="True"
-                        AudioCategory="ForegroundOnlyMedia"
-                        AutoPlay="True"
-                        MediaFailed="MediaFailed"
-                      
-                      
-            />
-
+        <!--Media Element: -->
+        <Grid Grid.Row="1">
+            <MediaElement x:Name="Player"
+            AreTransportControlsEnabled="True"
+            AudioCategory="ForegroundOnlyMedia"
+            AutoPlay="True"
+            MediaFailed="MediaFailed"
+        />
+        </Grid>
     </Grid>
 </Page>
