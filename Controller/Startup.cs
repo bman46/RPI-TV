@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +18,16 @@ namespace Controller
     {
         public Startup(IConfiguration configuration)
         {
+            //check for config file:
+            if (!File.Exists("Channels.tv"))
+            {
+                File.Create("Channels.tv");
+            }
+            if (!File.Exists("Devices.tv"))
+            {
+                File.Create("Devices.tv");
+            }
+
             Configuration = configuration;
         }
 

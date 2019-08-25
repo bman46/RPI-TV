@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,15 +20,38 @@ namespace Controller.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<string> Get(string name)
         {
             return "value";
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] int Operation, string Name, int Channel = 1, string Url = null)
         {
+            if (Operation == 1)
+            {
+                //Change Channel:
+                OperationsTV.ChangeChannel(Name, Channel);
+            }
+            else if(Operation == 2)
+            {
+                //Add Device
+                OperationsTV.AddDevice(Name);
+            }
+            else if(Operation == 3)
+            {
+                //Add Channel
+                if (Url == null)
+                {
+                    return;
+                }
+                OperationsTV.CreateChannel(Url);
+            }
+            else
+            {
+                return;
+            }
         }
 
         // PUT api/values/5

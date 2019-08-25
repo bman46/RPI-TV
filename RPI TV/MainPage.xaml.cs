@@ -15,14 +15,12 @@ using Windows.UI.Xaml.Navigation;
 using FFmpegInterop;
 using Windows.Media.Core;
 using Windows.UI.Popups;
+using Windows.Storage;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace RPI_TV
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         private FFmpegInteropMSS FFmpegMSS;
@@ -30,9 +28,26 @@ namespace RPI_TV
         {
             this.InitializeComponent();
 
+            //get name of device:
+            var deviceInfo = new Windows.Security.ExchangeActiveSyncProvisioning.EasClientDeviceInformation();
+            Settings.Name = deviceInfo.FriendlyName.ToString();
+            //find server IP:
+            ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            Windows.Storage.ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values["IPConfigs"];
+            if (composite != null)
+            {
+                Settings.ServerIP = composite["ServerIP"] as string;
+            } else
+            {
+                var messageDialog = new MessageDialog("No Server IP Found.");
+                composite["ServerIP"] = "Calibri";
+                roamingSettings.Values["IPConfigs"] = composite;
+            }
+
             //stream:
             Settings.Source = "rtmp://192.168.1.51:1935/live/5c33d398e4b02b6251941977_0";
             Stream();
+            
         }
         private void Stream()
         {
@@ -73,6 +88,7 @@ namespace RPI_TV
         private void MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
             Errors();
+            
         }
         private void Errors()
         {
@@ -82,6 +98,7 @@ namespace RPI_TV
     public class Settings
     {
         public static string Source { get; set; }
+        public static string ServerIP { get; set; }
         public static string Name { get; set; }
         public static bool AudioDecode { get; set; }
         public static int ErrorCount { get; set; }
