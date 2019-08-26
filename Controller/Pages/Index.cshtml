@@ -3,5 +3,39 @@
 @{
     ViewData["Title"] = "Home";
 }
-
+<h2>Devices</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Device Name</th>
+                <th scope="col">Channel</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                using (var db = new Model.DeviceChannels())
+                {
+                    foreach (var device in db.Devices)
+                    {
+                        <tr>
+                            <th scope="row">@device.DeviceName</th>
+                            <td>@NameResolver.IDToName(device.SetChannel)</td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+<hr />
+<h2>Change Channel:</h2>
+<form method="post">
+    Device:<br />
+    <select asp-for="SelectedDevice" id="TopSelectedDevice" asp-items="Model.DeviceList" class="form-control"></select><br />
+    <span asp-validation-for="SelectedDevice" class="text-danger"></span><br/>
+    Channel:<br />
+    <select asp-for="SelectedChannel" asp-items="Model.ChannelList" class="form-control"></select><br />
+    <span asp-validation-for="SelectedChannel" class="text-danger"></span><br />
+    <input type="submit" value="Change Channel" class="btn btn-primary" name="Change" />
+    <input type="submit" value="Delete Device" onclick="return confirm('Are you sure you would like to delete a device?')" class="btn btn-danger" name="Delete" />
+</form>
 
