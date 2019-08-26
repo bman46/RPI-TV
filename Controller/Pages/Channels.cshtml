@@ -3,4 +3,37 @@
 @{
     ViewData["Title"] = "Channels";
 }
+@{ 
+
+}
+<h3>Channels:</h3>
+<br />
+<ul class="list-group">
+    @{
+        using (var db = new Model.DeviceChannels())
+        {
+            foreach (var channel in db.Channels)
+            {
+                <li class="list-group-item">Name: @channel.ChannelName ID: @channel.ChannelID</li>
+            }
+        }
+    }
+</ul>
+<br />
+<h3>Add Channel:</h3>
+<form method="post">
+    <h6>Name:</h6>
+    <input class="form-control"
+           id="ChannelName"
+           name="Channel Name"
+           type="text"
+           placeholder="Fox Sports" /><br />
+    <h6>URL:</h6>
+    <input class="form-control"
+           id="ChannelURL"
+           name="Channel URL"
+           type="text"
+           placeholder="rtmp://192.168.1.51:1935/live/5c33d398e4b02b625194197b_0" /><br />
+    <input type="submit" value="Submit" class="btn btn-primary" />
+</form>
 
