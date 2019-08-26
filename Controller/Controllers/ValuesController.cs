@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,16 +19,15 @@ namespace Controller.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(string name)
+        public ActionResult<string> Get(int id)
         {
             return "value";
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string Name)
+        public void Post([FromBody] string value)
         {
-            
         }
 
         // PUT api/values/5
