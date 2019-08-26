@@ -14,26 +14,22 @@ namespace Controller.API
         // GET: api/<controller>
         
         // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(string DeviceName)
+        [HttpGet("{DeviceName}")]
+        public async Task<ActionResult<string>> TVChannel(string DeviceName)
         {
-            using (var db = new Model.DeviceChannels())
+            try
             {
-                foreach (var device in db.Devices)
+                using (var db = new Model.DeviceChannels())
                 {
-                    if(device.DeviceName == DeviceName)
-                    {
-                        foreach(var channel in db.Channels)
-                        {
-                            if(channel.ChannelID == device.SetChannel)
-                            {
-                                return channel.Url;
-                            }
-                        }
-                    }
+                    var device = db.Devices.Where(d => d.DeviceName.Contains(DeviceName));
+                    int SelectChannel = device.SingleOrDefault().SetChannel;
+                    return NameResolver.IDToURL(SelectChannel);
                 }
             }
-            return "NA";
+            catch
+            {
+                return "NaN";
+            }
         }
 
         // POST api/<controller>

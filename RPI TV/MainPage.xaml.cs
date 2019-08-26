@@ -51,7 +51,7 @@ namespace RPI_TV
             //stream event subscriber:
             Settings.SourceChanged += Stream;
             //Worker to check for new source:
-            Settings.Source = "rtmp://192.168.1.51:1935/live/5c33d398e4b02b625194197b_0";
+            ControllerSync.UpdateLoop();
         }
         public void Stream(Object source, EventArgs e)
         {
