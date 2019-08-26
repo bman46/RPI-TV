@@ -33,7 +33,7 @@ namespace RPI_TV
                         else
                         {
                             if (Settings.Source != Response)
-                            {
+                            { 
                                 Settings.Source = Response;
                             }
                         }
