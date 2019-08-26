@@ -12,23 +12,43 @@ namespace Controller.API
     public class ValuesController
     {
         // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string Get(string DeviceName)
         {
-            return "value";
+            using (var db = new Model.DeviceChannels())
+            {
+                foreach (var device in db.Devices)
+                {
+                    if(device.DeviceName == DeviceName)
+                    {
+                        foreach(var channel in db.Channels)
+                        {
+                            if(channel.ChannelID == device.SetChannel)
+                            {
+                                return channel.Url;
+                            }
+                        }
+                    }
+                }
+            }
+            return "NA";
         }
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]string Name)
         {
+            using (var db = new Model.DeviceChannels())
+            {
+                if(Name != null || Name != "")
+                {
+                    db.Devices.Add(new Model.Device { DeviceName = Name });
+                    db.SaveChanges();
+                }
+            }
         }
 
         // PUT api/<controller>/5
