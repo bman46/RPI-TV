@@ -4,7 +4,7 @@
     ViewData["Title"] = "Channels";
 }
 
-<h3>Channels:</h3>
+<h2>Channels:</h2>
 <br />
 <ul class="list-group">
     @{
@@ -18,16 +18,16 @@
     }
 </ul>
 <hr />
-<h3>Add Channel:</h3>
+<h2>Add Channel:</h2>
 <form method="post">
-    <h2>Name:</h2>
+    <h3>Name:</h3>
     <input class="form-control"
            asp-for="ChannelNameIn"
            name="ChannelNameIn"
            type="text"
            placeholder="Fox Sports" />
     <span asp-validation-for="ChannelNameIn" class="text-danger"></span>
-    <h2>URL:</h2>
+    <h3>URL:</h3>
     <input class="form-control"
            asp-for="URLIn"
            name="URLIn"
