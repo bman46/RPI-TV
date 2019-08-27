@@ -10,9 +10,7 @@ namespace Controller.API
 {
     [Route("api/[controller]")]
     public class ValuesController
-    {
-        // GET: api/<controller>
-        
+    {        
         // GET api/<controller>/5
         [HttpGet("{DeviceName}")]
         public async Task<ActionResult<string>> TVChannel(string DeviceName)
@@ -23,8 +21,9 @@ namespace Controller.API
                 {
 
                     var device = db.Devices.Where(d => d.DeviceName.Contains(DeviceName));
-                    if (device.SingleOrDefault().SetChannel.ToString()==null|| device.SingleOrDefault().SetChannel.ToString() == "") {
-                        return "Null";
+                    if (device.SingleOrDefault().SetChannel == 0)
+                    {
+                        return "Not Set";
                     }
                     int SelectChannel = device.SingleOrDefault().SetChannel;
                     return NameResolver.IDToURL(SelectChannel);
