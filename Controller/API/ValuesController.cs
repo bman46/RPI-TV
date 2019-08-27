@@ -21,7 +21,11 @@ namespace Controller.API
             {
                 using (var db = new Model.DeviceChannels())
                 {
+
                     var device = db.Devices.Where(d => d.DeviceName.Contains(DeviceName));
+                    if (device.SingleOrDefault().SetChannel.ToString()==null|| device.SingleOrDefault().SetChannel.ToString() == "") {
+                        return "Null";
+                    }
                     int SelectChannel = device.SingleOrDefault().SetChannel;
                     return NameResolver.IDToURL(SelectChannel);
                 }
@@ -40,7 +44,7 @@ namespace Controller.API
             {
                 if(Name != null && Name != "")
                 {
-                    db.Devices.Add(new Model.Device { DeviceName = Name });
+                    db.Devices.Add(new Model.Device { DeviceName = Name, SetChannel = 0});
                     db.SaveChanges();
                 }
             }

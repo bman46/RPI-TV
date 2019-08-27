@@ -40,9 +40,11 @@ namespace RPI_TV
             //get name of device:
             var deviceInfo = new Windows.Security.ExchangeActiveSyncProvisioning.EasClientDeviceInformation();
             Settings.Name = deviceInfo.FriendlyName.ToString();
+
             //find server IP:
             ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
             Windows.Storage.ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values["IPConfigs"];
+
             if (composite != null)
             {
                 Settings.ServerIP = composite["ServerIP"] as string;
@@ -50,6 +52,7 @@ namespace RPI_TV
 
             //stream event subscriber:
             Settings.SourceChanged += Stream;
+
             //Worker to check for new source:
             ControllerSync.UpdateLoop();
         }
