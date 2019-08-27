@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Net;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
+using System.Diagnostics;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -54,16 +55,16 @@ namespace RPI_TV
             Settings.SourceChanged += Stream;
 
             //Worker to check for new source:
-            ControllerSync.UpdateLoop();
+            UpdateLoop();
         }
         public void Stream(Object source, EventArgs e)
         {
             try
             {
-                Player.Stop();
                 PropertySet options = new PropertySet();
+                Player.Stop();
                 options.Add("rtsp_flags", "prefer_udp");
-                FFmpegMSS = FFmpegInteropMSS.CreateFFmpegInteropMSSFromUri(Settings.Source, Settings.AudioDecode, true, options);
+                FFmpegMSS = FFmpegInteropMSS.CreateFFmpegInteropMSSFromUri(Settings.Source, false, true, options);
                 if (FFmpegMSS != null)
                 {
                     MediaStreamSource mss = FFmpegMSS.GetMediaStreamSource();
@@ -74,30 +75,65 @@ namespace RPI_TV
                     }
                     else
                     {
-                        Errors();
+                        Errors(1);
                         return;
                     }
                 }
                 else
                 {
-                    Errors();
+                    Errors(2);
                     return;
                 }
             }
             catch
             {
-                Errors();
+                Errors(3);
                 return;
             }
         }
+        public void UpdateLoop()
+        {
+            Task.Run(async () =>
+            {
+                while (true) {
+                    Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
+                    Uri RequestUri = new Uri("http://" + Settings.ServerIP + "/api/Values/" + Settings.Name);
+                    Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();
+                    try
+                    {
+                        httpResponse = await httpClient.GetAsync(RequestUri);
+                        httpResponse.EnsureSuccessStatusCode();
+                        string Response = await httpResponse.Content.ReadAsStringAsync();
+                        if (Response == "NaN")
+                        {
+                            await ControllerSync.AddDevice();
+                        }
+                        else
+                        {
+                            if (Settings.Source != Response)
+                            {
+                                Debug.WriteLine(Response);
+                                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                                    Settings.Source = Response;
+                                });
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        //Do Nothing
+                    }
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+                }
+            });
+        }
         private void MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
-            Errors();
-            
+            Debug.WriteLine(e.ToString());
         }
-        private void Errors()
+        private void Errors(int area = 0)
         {
-            Settings.ErrorCount++;
+            Debug.WriteLine("Error " + area);
         }
         private void CustomizeTitleBar()
         {

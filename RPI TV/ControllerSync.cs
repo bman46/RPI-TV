@@ -14,41 +14,6 @@ namespace RPI_TV
 {
     class ControllerSync
     {
-        public static void UpdateLoop()
-        {
-            Task.Run(async () =>
-            {
-                while (true)
-                {
-                    Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
-                    Uri RequestUri = new Uri("http://" + Settings.ServerIP + "/api/Values/" + Settings.Name);
-                    Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();
-                    string Response;
-                    try
-                    {
-                        httpResponse = await httpClient.GetAsync(RequestUri);
-                        httpResponse.EnsureSuccessStatusCode();
-                        Response = await httpResponse.Content.ReadAsStringAsync();
-                        if (Response == "NaN")
-                        {
-                            await AddDevice();
-                        }
-                        else
-                        {
-                            if (Settings.Source != Response)
-                            { 
-                                Settings.Source = Response;
-                            }
-                        }
-                    }
-                    catch
-                    {
-                        //Do Nothing
-                    }
-                    await Task.Delay(TimeSpan.FromSeconds(5));
-                }
-            });
-        }
         public static async Task AddDevice()
         {
             Debug.WriteLine("New Device");
