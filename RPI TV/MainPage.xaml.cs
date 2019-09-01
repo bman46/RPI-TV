@@ -23,8 +23,6 @@ using Windows.UI.ViewManagement;
 using System.Diagnostics;
 
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace RPI_TV
 {
     public sealed partial class MainPage : Page
@@ -63,7 +61,9 @@ namespace RPI_TV
             {
                 PropertySet options = new PropertySet();
                 Player.Stop();
-                options.Add("rtsp_flags", "prefer_udp");
+                options.Add("rtsp_flags", "prefer_tcp");
+                options.Add("stimeout", 100000);
+
                 FFmpegMSS = FFmpegInteropMSS.CreateFFmpegInteropMSSFromUri(Settings.Source, false, true, options);
                 if (FFmpegMSS != null)
                 {

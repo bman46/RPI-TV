@@ -29,7 +29,7 @@
         <!--Media Element: -->
         <Grid Grid.Row="1">
             <MediaElement x:Name="Player"
-            AreTransportControlsEnabled="False"
+            AreTransportControlsEnabled="True"
             AudioCategory="ForegroundOnlyMedia"
             AutoPlay="True"
             MediaFailed="MediaFailed"
