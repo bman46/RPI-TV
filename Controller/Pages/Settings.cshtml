@@ -1,0 +1,11 @@
+﻿@page
+@model SettingsModel
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<h2>Backup Database:</h2>
+<form method="post">
+    <input type="submit" asp-page-handler="DownloadDB" Name="DownloadFile" value="Download" class="btn btn-primary" />
+</form>
+

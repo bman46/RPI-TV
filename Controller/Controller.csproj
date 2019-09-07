@@ -13,6 +13,10 @@
     <None Remove="NewFolder1\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Database.db" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -26,9 +30,9 @@
 
 
   <ItemGroup>
-    <None Update="Database.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Include="Database.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

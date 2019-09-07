@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+//commands to build db:
+//dotnet ef migrations add InitialCreate
+//dotnet ef database update
 
 namespace Controller
 {
@@ -22,6 +25,7 @@ namespace Controller
             public int ChannelID { get; set; }
             public string ChannelName { get; set; }
             public string Url { get; set; }
+            public string Protocol { get; set; }
         }
         public class Device
         {

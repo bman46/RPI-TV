@@ -22,6 +22,8 @@ namespace Controller.Migrations
 
                     b.Property<string>("ChannelName");
 
+                    b.Property<string>("Protocol");
+
                     b.Property<string>("Url");
 
                     b.HasKey("ChannelID");

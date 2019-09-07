@@ -61,8 +61,7 @@ namespace RPI_TV
             {
                 PropertySet options = new PropertySet();
                 Player.Stop();
-                options.Add("rtsp_flags", "prefer_tcp");
-                options.Add("stimeout", 100000);
+                options.Add("rtsp_transport", "tcp");
 
                 FFmpegMSS = FFmpegInteropMSS.CreateFFmpegInteropMSSFromUri(Settings.Source, false, true, options);
                 if (FFmpegMSS != null)
@@ -110,8 +109,9 @@ namespace RPI_TV
                         }
                         else
                         {
-                            if (Settings.Source != Response)
+                            if (Settings.Source != Response || Settings.Error == true) 
                             {
+                                Settings.Error = false;
                                 Debug.WriteLine(Response);
                                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
                                     Settings.Source = Response;
@@ -134,6 +134,7 @@ namespace RPI_TV
         private void Errors(int area = 0)
         {
             Debug.WriteLine("Error " + area);
+            Settings.Error = true;
         }
         private void CustomizeTitleBar()
         {

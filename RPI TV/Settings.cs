@@ -23,8 +23,7 @@ namespace RPI_TV
         private static string SourceStorage { get; set; }
         public static string ServerIP { get; set; }
         public static string Name { get; set; }
-        public static bool AudioDecode { get; set; }
-        public static int ErrorCount { get; set; }
+        public static bool Error { get; set; }
 
         //Event:
         public static event EventHandler SourceChanged = delegate {};

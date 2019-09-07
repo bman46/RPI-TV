@@ -13,7 +13,8 @@ namespace Controller.Migrations
                     ChannelID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ChannelName = table.Column<string>(nullable: true),
-                    Url = table.Column<string>(nullable: true)
+                    Url = table.Column<string>(nullable: true),
+                    Protocol = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

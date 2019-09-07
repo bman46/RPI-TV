@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="ea64e035-36aa-4afe-983a-3a96b5a28ccf"
-    Publisher="CN=brend"
-    Version="1.0.0.0" />
+    Name="64281bman46.RPITV"
+    Publisher="CN=3818DDF2-95C7-4514-B143-280578F865B2"
+    Version="1.0.3.0" />
 
-  <mp:PhoneIdentity PhoneProductId="ea64e035-36aa-4afe-983a-3a96b5a28ccf" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="86d5cb05-f32d-4bc0-aeb4-e8603e934588" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>RPI TV</DisplayName>
-    <PublisherDisplayName>brend</PublisherDisplayName>
+    <DisplayName>RPITV</DisplayName>
+    <PublisherDisplayName>bman46</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -32,7 +32,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="RPI_TV.App">
       <uap:VisualElements
-        DisplayName="RPI TV"
+        DisplayName="TV"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="RPI TV"

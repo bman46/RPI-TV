@@ -10,10 +10,10 @@ namespace Controller.API
 {
     [Route("api/[controller]")]
     public class ValuesController
-    {        
+    {
         // GET api/<controller>/5
         [HttpGet("{DeviceName}")]
-        public async Task<ActionResult<string>> TVChannel(string DeviceName)
+        public ActionResult<string> TVChannel(string DeviceName)
         {
             try
             {

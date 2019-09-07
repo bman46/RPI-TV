@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Controller.Migrations
 {
     [DbContext(typeof(Model.DeviceChannels))]
-    [Migration("20190826013447_InitialCreate")]
+    [Migration("20190902193438_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,8 @@ namespace Controller.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ChannelName");
+
+                    b.Property<string>("Protocol");
 
                     b.Property<string>("Url");
 
