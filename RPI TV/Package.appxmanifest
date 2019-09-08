@@ -9,7 +9,7 @@
   <Identity
     Name="64281bman46.RPITV"
     Publisher="CN=3818DDF2-95C7-4514-B143-280578F865B2"
-    Version="1.0.3.0" />
+    Version="1.0.5.0" />
 
   <mp:PhoneIdentity PhoneProductId="86d5cb05-f32d-4bc0-aeb4-e8603e934588" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
