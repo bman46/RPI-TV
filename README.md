@@ -8,6 +8,5 @@ A digital livestream TV matrix origionally designed to run on Windows 10 IOT. La
 5. Enter IP address or url of Controller
 6. Open Controller software add a channel. (Here is a good test one: rtmp://fms.105.net/live/rmc1 )
 7. Assign device to the channel on the Controller.
-
-#### Commercial Use:
-Please contact me (email in bio) to negotiate pricing for commercial use.
+## Commercial Use:
+Please contact me (email in bio) to negotiate licensing for commercial use.
