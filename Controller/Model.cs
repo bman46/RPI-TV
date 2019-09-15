@@ -32,6 +32,7 @@ namespace Controller
             public int ID { get; set; }
             public string DeviceName { get; set; }
             public int SetChannel { get; set; }
+            public int Volume { get; set; }
         }
     }
 }

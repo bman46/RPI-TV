@@ -11,6 +11,7 @@ namespace Controller.API
     [Route("api/[controller]")]
     public class ValuesController
     {
+        
         // GET api/<controller>/5
         [HttpGet("{DeviceName}")]
         public ActionResult<string> TVChannel(string DeviceName)
@@ -19,12 +20,13 @@ namespace Controller.API
             {
                 using (var db = new Model.DeviceChannels())
                 {
-
+                    //DeviceJSON returnVals = new DeviceJSON();
                     var device = db.Devices.Where(d => d.DeviceName.Contains(DeviceName));
                     if (device.SingleOrDefault().SetChannel == 0)
                     {
                         return "Not Set";
                     }
+                    //old:
                     int SelectChannel = device.SingleOrDefault().SetChannel;
                     return NameResolver.IDToURL(SelectChannel);
                 }
